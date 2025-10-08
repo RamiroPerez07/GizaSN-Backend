@@ -1,0 +1,33 @@
+# Node.js
+node_modules/          # Dependencias de Node.js
+node_modules
+
+# Archivos de log
+npm-debug.log*         # Archivos de log de npm
+yarn-debug.log*        # Archivos de log de Yarn
+yarn-error.log         # Otro log de Yarn
+
+# Directorios de construcción
+dist/                  # Carpeta de distribución
+build/                 # Otra carpeta de construcción (si usas algún sistema de bundling como Webpack)
+dist
+build
+
+# Archivos de entorno
+.env                   # Archivo de configuración de variables de entorno
+
+# Archivos de OS
+.DS_Store              # macOS
+Thumbs.db              # Windows
+
+# Archivos de configuración de IDE
+.vscode/               # Visual Studio Code
+.idea/                 # JetBrains
+
+# Archivos temporales
+*.log                  # Archivos de log en general
+*.bak                  # Archivos de respaldo
+*.swp                  # Archivos temporales de editores como Vim
+
+# Otros
+*.tgz                  # Archivos comprimidos generados por npm pack
