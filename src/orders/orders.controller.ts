@@ -84,4 +84,33 @@ export class OrdersController {
       return res.status(500).json({ message: 'Error al obtener pedido', error: error.message });
     }
   }
+
+  async updateOrderStatus (req: Request, res: Response) {
+    const { id } = req.params;
+    const updates = req.body; // puede contener delivered, charged, status
+
+    try {
+      // Opcional: validar que solo se puedan actualizar ciertos campos
+      const allowedFields = ['delivered', 'charged', 'status'];
+      const payload: any = {};
+      for (const key of allowedFields) {
+        if (key in updates) payload[key] = updates[key];
+      }
+
+      const updatedOrder = await OrderModel.findByIdAndUpdate(
+        id,
+        payload,
+        { new: true }
+      );
+
+      if (!updatedOrder) {
+        return res.status(404).json({ error: 'Pedido no encontrado' });
+      }
+
+      res.json(updatedOrder);
+    } catch (err: any) {
+      console.error('Error actualizando pedido:', err);
+      res.status(500).json({ error: err.message });
+    }
+  }
 }
