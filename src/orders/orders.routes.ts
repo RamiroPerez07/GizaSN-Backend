@@ -5,10 +5,10 @@ import { OrdersController } from './orders.controller';
 const router = Router();
 const ordersController = new OrdersController();
 
-router.post('/', authMiddleware, ordersController.createOrder); //crear un pedido
-router.get('/:id', authMiddleware, ordersController.getOrderById);  //obtener pedido por id
-router.get('/', authMiddleware, ordersController.getAllOrders); // Ruta para obtener todos los pedidos
-router.delete('/:status', authMiddleware, ordersController.getOrdersByStatus); //Obtener pedidos por status
-router.put('/:id', authMiddleware, ordersController.cancelOrder);
+router.post('/', ordersController.createOrder); //crear un pedido
+router.get('/:id', ordersController.getOrderById);  //obtener pedido por id
+router.get('/', ordersController.getAllOrders); // Ruta para obtener todos los pedidos
+router.delete('/:status', ordersController.getOrdersByStatus); //Obtener pedidos por status
+router.put('/:id', ordersController.cancelOrder);
 
 export default router;
