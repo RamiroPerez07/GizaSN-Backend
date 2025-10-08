@@ -8,7 +8,7 @@ const ordersController = new OrdersController();
 router.post('/', ordersController.createOrder); //crear un pedido
 router.get('/:id', ordersController.getOrderById);  //obtener pedido por id
 router.get('/', ordersController.getAllOrders); // Ruta para obtener todos los pedidos
-router.delete('/:status', ordersController.getOrdersByStatus); //Obtener pedidos por status
+router.get('/:status', ordersController.getOrdersByStatus); //Obtener pedidos por status
 router.put('/:id', ordersController.cancelOrder);
 
 export default router;
