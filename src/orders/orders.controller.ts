@@ -34,9 +34,9 @@ export class OrdersController {
       const { status } = req.params;
       const orders = await OrderModel.find({ status }).sort({ createdAt: -1 });
 
-      if (!orders.length) {
-        return res.status(404).json({ message: `No se encontraron pedidos con status "${status}"` });
-      }
+      // if (!orders.length) {
+      //   return res.status(404).json({ message: `No se encontraron pedidos con status "${status}"` });
+      // }
 
       return res.status(200).json(orders);
     } catch (error: any) {
