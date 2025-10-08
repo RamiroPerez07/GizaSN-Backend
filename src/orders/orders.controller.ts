@@ -8,13 +8,6 @@ export class OrdersController {
   async createOrder(req: Request, res: Response) {
     try {
       const orderData: IOrder = req.body;
-
-      // Generar idOrder único si no viene en el body
-      if (!orderData.idOrder) {
-        const timestamp = Date.now().toString().slice(-6);
-        orderData.idOrder = `ORD-${timestamp}`;
-      }
-
       const newOrder = new OrderModel(orderData);
       const savedOrder = await newOrder.save();
       return res.status(201).json(savedOrder);

@@ -46,7 +46,7 @@ const OrderSchema = new Schema<OrderDocument>(
     status: { type: String, required: true },
     delivered: { type: Boolean, default: false },
     charged: { type: Boolean, default: false },
-    deliveryDate: { type: Date, required: true },
+    deliveryDate: { type: Date },
     nameBuyer: { type: String, required: true },
     lastNameBuyer: { type: String, required: true },
     identityDocument: String,
@@ -55,7 +55,7 @@ const OrderSchema = new Schema<OrderDocument>(
     address: { type: String, required: true },
     locality: { type: String, required: true },
     items: { type: [ProductSchema], required: true },
-    observation: String,
+    observation: {type: String},
   },
   { timestamps: true } // esto crea automáticamente createdAt y updatedAt
 );
