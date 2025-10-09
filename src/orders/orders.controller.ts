@@ -91,7 +91,7 @@ export class OrdersController {
 
     try {
       // Opcional: validar que solo se puedan actualizar ciertos campos
-      const allowedFields = ['delivered', 'charged', 'status', 'observation'];
+      const allowedFields = ['delivered', 'charged', 'status', 'observation', 'deliveryDate'];
       const payload: any = {};
       for (const key of allowedFields) {
         if (key in updates) payload[key] = updates[key];
