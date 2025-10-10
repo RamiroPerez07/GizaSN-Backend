@@ -8,7 +8,7 @@ export interface IOrder{
     status: string;
     delivered: boolean;
     charged: boolean;
-    deliveryDate?: Date;
+    deliveryDate?: Date | null;
     nameBuyer: string;
     lastNameBuyer: string;
     identityDocument?: string;
@@ -16,6 +16,7 @@ export interface IOrder{
     paymentMethod: string;
     address: string;
     locality: string;
+    origin: string;
     items: IProduct[];
     observation?: string;
     updatedAt?: Date;

@@ -44,6 +44,7 @@ const OrderSchema = new Schema<OrderDocument>(
     posId: { type: String, required: true },
     pos: { type: String, required: true },
     status: { type: String, required: true },
+    origin: {type: String, required: true},
     delivered: { type: Boolean, default: false },
     charged: { type: Boolean, default: false },
     deliveryDate: { type: Date },
