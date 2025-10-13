@@ -8,10 +8,10 @@ export class AuthController {
 
     const secret = "este_es_un_secreto_que_debe_ser_reemplazado_por_otro"
 
-    const { email, password } = req.body;
+    const { username, password } = req.body;
 
     try {
-      const user: IUser | null = await User.findOne({ email });
+      const user: IUser | null = await User.findOne({ username });
       if (!user) {
         res.status(404).json({ message: 'Usuario no encontrado' });
         return;
@@ -24,9 +24,9 @@ export class AuthController {
       }
 
       // Generar un token JWT
-      const token = jwt.sign({ id: user._id }, secret, { expiresIn: '1h' });
+      const token = jwt.sign({ id: user._id }, secret /*, { expiresIn: '1h' } */);
       
-      res.status(200).json({username: user.username, email: user.email, _id: user._id, token });
+      res.status(200).json({username: user.username, name: user.name , _id: user._id, token });
     } catch (error) {
       console.log(error)
       res.status(500).json({ message: 'Error del servidor', error });
@@ -34,10 +34,10 @@ export class AuthController {
   }
 
   async register(req: Request, res: Response) {
-    const { username, email, password } = req.body;
+    const { username, name, password } = req.body;
 
   try {
-    const newUser = new User({ username, email, password });
+    const newUser = new User({ username, name, password });
     await newUser.save();
     res.status(201).json({ newUser, message: 'Usuario registrado exitosamente' });
   } catch (error) {
