@@ -41,6 +41,7 @@ export class AuthController {
       await newUser.save();
       res.status(201).json({ newUser, message: 'Usuario registrado exitosamente' });
     } catch (error) {
+      /* Mostrar errores */
       console.log(error)
       res.status(400).json({ message: 'Error al registrar el usuario', error });
     }
