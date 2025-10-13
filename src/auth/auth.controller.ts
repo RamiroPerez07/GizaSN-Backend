@@ -48,21 +48,32 @@ export class AuthController {
   }
 
   async validateToken(req: Request, res: Response) {
+    const secret = "este_es_un_secreto_que_debe_ser_reemplazado_por_otro";
+
     try {
-      // Si el middleware llegó hasta acá, el token es válido
-      const userId = req.body.userId;
-
-      const user = await User.findById(userId).select('-password'); // sin password
-
-      if (!user) {
-        res.status(404).json({ message: 'Usuario no encontrado' });
-        return;
+      const authHeader = req.headers['authorization'];
+      if (!authHeader) {
+        return res.status(401).json({ message: 'Token no proporcionado' });
       }
 
-      res.status(200).json({ message: 'Token válido', user });
+      const token = authHeader.split(' ')[1];
+      if (!token) {
+        return res.status(401).json({ message: 'Token mal formado' });
+      }
+
+      const decoded: any = jwt.verify(token, secret);
+      const userId = decoded.id;
+
+      const user = await User.findById(userId).select('-password');
+      if (!user) {
+        return res.status(404).json({ message: 'Usuario no encontrado' });
+      }
+
+      // Token válido, respondemos con el usuario
+      return res.status(200).json({ message: 'Token válido', user });
     } catch (error) {
       console.error(error);
-      res.status(500).json({ message: 'Error al validar el token' });
+      return res.status(401).json({ message: 'Token inválido o expirado' });
     }
   }
 }
