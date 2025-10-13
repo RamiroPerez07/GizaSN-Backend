@@ -46,4 +46,24 @@ export class AuthController {
       res.status(400).json({ message: 'Error al registrar el usuario', error });
     }
   }
+
+  async validateToken(req: Request, res: Response) {
+    try {
+      // Si el middleware llegó hasta acá, el token es válido
+      const userId = req.body.userId;
+
+      const user = await User.findById(userId).select('-password'); // sin password
+
+      if (!user) {
+        res.status(404).json({ message: 'Usuario no encontrado' });
+        return;
+      }
+
+      res.status(200).json({ message: 'Token válido', user });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Error al validar el token' });
+    }
+  }
 }
+
