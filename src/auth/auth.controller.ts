@@ -36,12 +36,13 @@ export class AuthController {
   async register(req: Request, res: Response) {
     const { username, name, password } = req.body;
 
-  try {
-    const newUser = new User({ username, name, password });
-    await newUser.save();
-    res.status(201).json({ newUser, message: 'Usuario registrado exitosamente' });
-  } catch (error) {
-    res.status(400).json({ message: 'Error al registrar el usuario', error });
-  }
+    try {
+      const newUser = new User({ username, name, password });
+      await newUser.save();
+      res.status(201).json({ newUser, message: 'Usuario registrado exitosamente' });
+    } catch (error) {
+      console.log(error)
+      res.status(400).json({ message: 'Error al registrar el usuario', error });
+    }
   }
 }
