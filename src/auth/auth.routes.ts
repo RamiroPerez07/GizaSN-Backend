@@ -6,7 +6,7 @@ const authController = new AuthController();
 
 router.post('/login', authController.login);
 router.post('/register', authController.register);
-// 🛡️ Ruta protegida para validar el token con get.
+// 🛡️ Ruta protegida para validar el token con get...
 router.get('/validate', authController.validateToken);
 
 export default router;
