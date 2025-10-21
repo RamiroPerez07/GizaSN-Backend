@@ -21,4 +21,5 @@ export interface IOrder{
     observation?: string;
     updatedAt?: Date;
     createdAt?: Date;
+    username?: string;
 }

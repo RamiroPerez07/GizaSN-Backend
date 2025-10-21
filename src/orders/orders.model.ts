@@ -57,6 +57,7 @@ const OrderSchema = new Schema<OrderDocument>(
     locality: { type: String, required: true },
     items: { type: [ProductSchema], required: true },
     observation: {type: String},
+    username: {type:String},
   },
   { timestamps: true } // esto crea automáticamente createdAt y updatedAt
 );
