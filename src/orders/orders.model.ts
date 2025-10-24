@@ -53,6 +53,7 @@ const OrderSchema = new Schema<OrderDocument>(
     identityDocument: String,
     telBuyer: String,
     paymentMethod: { type: String, required: true },
+    addressType: {type: String},
     address: { type: String, required: true },
     locality: { type: String, required: true },
     items: { type: [ProductSchema], required: true },

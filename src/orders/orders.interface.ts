@@ -14,6 +14,7 @@ export interface IOrder{
     identityDocument?: string;
     telBuyer?: string;
     paymentMethod: string;
+    addressType?: string;
     address: string;
     locality: string;
     origin: string;
