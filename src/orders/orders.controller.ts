@@ -17,28 +17,31 @@ export class OrdersController {
     }
   }
 
-  // Obtener todos los pedidos
-  async getAllOrders(req: Request, res: Response) {
-    try {
-      const orders = await OrderModel.find().sort({ createdAt: -1 });
-      return res.status(200).json(orders);
-    } catch (error: any) {
-      console.error('Error al obtener pedidos:', error);
-      return res.status(500).json({ message: 'Error al obtener pedidos', error: error.message });
-    }
-  }
-
-  // Obtener pedidos por status
+  // Obtener pedidos por status (o todos)
   async getOrdersByStatus(req: Request, res: Response) {
     try {
       const { status } = req.params;
-      const orders = await OrderModel.find({ status }).sort({ createdAt: -1 });
+      const page = parseInt(req.query.page as string) || 1;
+      const limit = parseInt(req.query.limit as string) || 10;
+      const skip = (page - 1) * limit;
 
-      // if (!orders.length) {
-      //   return res.status(404).json({ message: `No se encontraron pedidos con status "${status}"` });
-      // }
+      const filter = status === 'all' ? {} : { status };
 
-      return res.status(200).json(orders);
+      const [orders, total] = await Promise.all([
+        OrderModel.find(filter)
+          .sort({ createdAt: -1 })
+          .skip(skip)
+          .limit(limit),
+        OrderModel.countDocuments(filter),
+      ]);
+
+      return res.status(200).json({
+        total,
+        page,
+        totalPages: Math.ceil(total / limit),
+        limit,
+        orders,
+      });
     } catch (error: any) {
       console.error('Error al obtener pedidos por status:', error);
       return res.status(500).json({ message: 'Error al obtener pedidos por status', error: error.message });
