@@ -3,6 +3,16 @@ import { IOrder } from './orders.interface';
 import { OrderModel } from './orders.model';
 import ExcelJS from 'exceljs';
 
+// Función helper para formatear fechas
+function formatDate(date?: Date | string) {
+  if (!date) return '';
+  const d = new Date(date);
+  const day = String(d.getDate()).padStart(2, '0');
+  const month = String(d.getMonth() + 1).padStart(2, '0'); // Los meses van de 0 a 11
+  const year = d.getFullYear();
+  return `${day}/${month}/${year}`;
+}
+
 export class OrdersController {
   
   // Crear un pedido
@@ -162,13 +172,13 @@ export class OrdersController {
         { header: 'Origen', key: 'origin', width: 15 },
 
         // Cliente
-        { header: 'Nombre', key: 'nameBuyer', width: 20 },
-        { header: 'Apellido', key: 'lastNameBuyer', width: 20 },
+        { header: 'Nombre Comprador', key: 'nameBuyer', width: 20 },
+        { header: 'Apellido Comprador', key: 'lastNameBuyer', width: 20 },
         { header: 'DNI', key: 'identityDocument', width: 15 },
-        { header: 'Teléfono', key: 'telBuyer', width: 20 },
+        //{ header: 'Teléfono', key: 'telBuyer', width: 20 },
         { header: 'Dirección', key: 'address', width: 30 },
         { header: 'Localidad', key: 'locality', width: 20 },
-        { header: 'Tipo Dirección', key: 'addressType', width: 20 },
+        //{ header: 'Tipo Dirección', key: 'addressType', width: 20 },
         { header: 'Método de Pago', key: 'paymentMethod', width: 20 },
 
         // Observaciones
@@ -180,12 +190,11 @@ export class OrdersController {
         { header: 'Marca', key: 'brand', width: 20 },
         { header: 'Categorías', key: 'categories', width: 25 },
         { header: 'Precio', key: 'price', width: 12 },
-        { header: 'IVA', key: 'iva', width: 10 },
+        //{ header: 'IVA', key: 'iva', width: 10 },
         { header: 'Cantidad', key: 'quantity', width: 12 },
         { header: 'Total Venta', key: 'totalProduct', width: 15 },
-        { header: 'En stock', key: 'inStock', width: 12 },
-        { header: 'Tags', key: 'tags', width: 25 },
-        { header: 'Atributos', key: 'attributes', width: 40 },
+        //{ header: 'Tags', key: 'tags', width: 25 },
+        //{ header: 'Atributos', key: 'attributes', width: 40 },
       ];
 
       // --- LLENAR DATOS ---
@@ -195,10 +204,10 @@ export class OrdersController {
             // Pedido
             idOrder: order.idOrder,
             createdAt: order.createdAt
-              ? new Date(order.createdAt).toLocaleString()
+              ? formatDate(order.createdAt)
               : '',
             deliveryDate: order.deliveryDate
-              ? new Date(order.deliveryDate).toLocaleDateString()
+              ? formatDate(order.deliveryDate)
               : '',
             status: order.status,
             delivered: order.delivered ? 'Sí' : 'No',
@@ -212,10 +221,10 @@ export class OrdersController {
             nameBuyer: order.nameBuyer,
             lastNameBuyer: order.lastNameBuyer,
             identityDocument: order.identityDocument || '',
-            telBuyer: order.telBuyer || '',
+            //telBuyer: order.telBuyer || '',
             address: order.address,
             locality: order.locality,
-            addressType: order.addressType || '',
+            //addressType: order.addressType || '',
             paymentMethod: order.paymentMethod,
 
             // Observación
@@ -227,16 +236,17 @@ export class OrdersController {
             brand: item.brand,
             categories: (item.idCategories || []).join(', '),
             price: item.price,
-            iva: item.iva,
+            //iva: item.iva,
             quantity: item.quantity ?? 0,
             totalProduct: (item.quantity ?? 1) * item.price,
-            inStock: item.inStock ? 'Sí' : 'No',
+            /*
             tags: (item.tags || []).join(', '),
             attributes: item.attributes
               ? Object.entries(item.attributes)
                   .map(([k, v]) => `${k}: ${v}`)
                   .join('; ')
               : '',
+            */
           });
         }
       }
